@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'User message rate limit',
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.hieutrtr.messenger.Messenger'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+repositories {
+   mavenCentral()
+   jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.0'
+
+    testCompile 'junit:junit:4.12'
+		testCompile 'org.mockito:mockito-core:2.+'
+}
