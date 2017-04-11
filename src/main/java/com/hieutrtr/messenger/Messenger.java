@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 public class Messenger implements Runnable {
   // Instead of PublishSubject cause missing event when starting
   private static ReplaySubject<ReplaySubject<Message>> mainStream = ReplaySubject.create();
-
+  private static long retryDelay = 1000;
   /*
   sendMessage
   userID: ID of sender
@@ -52,7 +52,7 @@ public class Messenger implements Runnable {
           }
           return mess;
         })
-        .retryWhen(new RetryWithDelay(1, 1000))
+        .retryWhen(new RetryWithDelay(1, retryDelay))
         .subscribe(item -> {}, error -> {
           messSubject.onError(error);
         });
@@ -62,10 +62,10 @@ public class Messenger implements Runnable {
 
   public class RetryWithDelay implements Function<Observable<? extends Throwable>, Observable<?>> {
     private final int maxRetries;
-    private final int retryDelayMillis;
+    private final long retryDelayMillis;
     private int retryCount;
 
-    public RetryWithDelay(final int maxRetries, final int retryDelayMillis) {
+    public RetryWithDelay(final int maxRetries, final long retryDelayMillis) {
         this.maxRetries = maxRetries;
         this.retryDelayMillis = retryDelayMillis;
         this.retryCount = 0;
@@ -110,7 +110,7 @@ public class Messenger implements Runnable {
     try{
       Thread.sleep(2000);
     } catch(Exception e) {}
-    System.out.println("1 message / 2 ms");
+    System.out.println("1 message / 2 ms of 100 messages");
     for(int i = 0; i < 100; i++) {
       Messenger.sendMessage(new SMSMessage("+84909192322",1907,"I'm normal spammer"), new Consumer<Throwable>() {
         @Override
