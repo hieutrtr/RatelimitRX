@@ -27,5 +27,5 @@ public abstract class Message {
     return userID;
   }
 
-  public abstract void postMessage() throws Exception;
+  public abstract boolean postMessage() throws Exception;
 }

@@ -1,13 +1,13 @@
-package com.hieutrtr.messenger;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+// package com.hieutrtr.messenger;
 //
-@RunWith(Suite.class)
-
-@Suite.SuiteClasses({
-  TestMessage.class,TestMessenger.class
-})
+// import org.junit.runner.RunWith;
+// import org.junit.runners.Suite;
+// //
+// @RunWith(Suite.class)
 //
-public class TestSuites {
-}
+// @Suite.SuiteClasses({
+//   TestMessage.class,TestMessenger.class
+// })
+// //
+// public class TestSuites {
+// }
